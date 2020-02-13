@@ -33,12 +33,12 @@ public void Player_Spawn_event(Handle event, char[] name, bool dontBroadcast){
     }
 }
 
-public Action Sent_Bot_Bomb_Postion_Data(Handle timer,any client){
+public Action Sent_Bot_Bomb_Postion_Data(Handle timer,any userid){
     StartPrepSDKCall(SDKCall_Raw);
     PrepSDKCall_SetSignature(SDKLibrary_Server,"\x55\x89\xE5\x56\x53\x83\xEC\x10\x8B\x75\x0C\xA1\x2A\x2A\x2A\x2A", 16);
     PrepSDKCall_AddParameter(SDKType_Vector, SDKPass_Pointer);
     Bomb_Postion_Sent = EndPrepSDKCall();
     if ((Bomb_Postion_Sent = EndPrepSDKCall()) == null) SetFailState("Not find CSGameState::UpdatePlantedBomb");
 
-    SDKCall(Bomb_Postion_Sent,GetEntityAddress(client)+22484, Server_C4_Position);
+    SDKCall(Bomb_Postion_Sent,GetEntityAddress(userid)+22484, Server_C4_Position);
 }
