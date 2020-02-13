@@ -1,7 +1,7 @@
 #include <sourcemod>
 #include <sdktools>
 
-Handle bomb_postion_sent;
+Handle Bomb_Postion_Sent;
 bool Bomb_Is_Setup;
 float Server_C4_Position[3];
 
@@ -35,8 +35,8 @@ public Action sent_bot_bomb_postion_data(Handle timer,any client){
     StartPrepSDKCall(SDKCall_Raw);
     PrepSDKCall_SetSignature(SDKLibrary_Server,"\x55\x89\xE5\x56\x53\x83\xEC\x10\x8B\x75\x0C\xA1\x2A\x2A\x2A\x2A", 16);
     PrepSDKCall_AddParameter(SDKType_Vector, SDKPass_Pointer);
-    bomb_postion_sent = EndPrepSDKCall();
-    if ((bomb_postion_sent = EndPrepSDKCall()) == null) SetFailState("Not find CSGameState::UpdatePlantedBomb");
+    Bomb_Postion_Sent = EndPrepSDKCall();
+    if ((Bomb_Postion_Sent = EndPrepSDKCall()) == null) SetFailState("Not find CSGameState::UpdatePlantedBomb");
 
-    SDKCall(bomb_postion_sent,GetEntityAddress(client)+22484, Server_C4_Position);
+    SDKCall(Bomb_Postion_Sent,GetEntityAddress(client)+22484, Server_C4_Position);
 }
