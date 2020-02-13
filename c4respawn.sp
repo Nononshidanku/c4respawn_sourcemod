@@ -19,6 +19,7 @@ public void Trueoff_Bomb_event(Handle event, char[] name, bool dontBroadcast){
 
 public void Bome_Planted_event(Handle event, char[] name, bool dontBroadcast){
     Bomb_Issetup = true;
+    
     int Ent = -1;
     Ent = FindEntityByClassname(Ent, "planted_c4");
     GetEntPropVector(Ent, Prop_Send, "m_vecOrigin", Server_C4_Position);
@@ -26,6 +27,7 @@ public void Bome_Planted_event(Handle event, char[] name, bool dontBroadcast){
 
 public void Player_Spawn_event(Handle event, char[] name, bool dontBroadcast){
     int Userid = GetClientOfUserId(GetEventInt(event,"userid"));
+    
     if (Bomb_Issetup == true && IsClientInGame(Userid) && IsFakeClient(Userid)){
         CreateTimer(1.0, Sent_Bot_Bomb_Postion_Data,Userid, TIMER_FLAG_NO_MAPCHANGE);
     }
