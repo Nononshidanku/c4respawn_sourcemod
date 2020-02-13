@@ -2,8 +2,8 @@
 #include <sdktools>
 
 Handle bomb_postion_sent;
-bool bomb_is_setup;
-float server_c4_position[3];
+bool Bomb_Is_Setup;
+float Server_C4_Position[3];
 
 public void OnPluginStart(){
     HookEvent("round_start",trueoff_bomb_event);
@@ -14,19 +14,19 @@ public void OnPluginStart(){
 }
 
 public void trueoff_bomb_event(Handle event, char[] name, bool dontBroadcast){
-    bomb_is_setup = false;
+    Bomb_Is_Setup = false;
 }
 
 public void bome_planted_event(Handle event, char[] name, bool dontBroadcast){
-    bomb_is_setup = true;
+    Bomb_Is_Setup = true;
     int ent=-1;
     ent = FindEntityByClassname(ent, "planted_c4");
-    GetEntPropVector(ent, Prop_Send, "m_vecOrigin", server_c4_position);
+    GetEntPropVector(ent, Prop_Send, "m_vecOrigin", Server_C4_Position);
 }
 
 public void player_spawn_event(Handle event, char[] name, bool dontBroadcast){
     int userid = GetClientOfUserId(GetEventInt(event,"userid"));
-    if (bomb_is_setup == true && IsClientInGame(userid) && IsFakeClient(userid)){
+    if (Bomb_Is_Setup == true && IsClientInGame(userid) && IsFakeClient(userid)){
         CreateTimer(1.0, sent_bot_bomb_postion_data,userid, TIMER_FLAG_NO_MAPCHANGE);
     }
 }
@@ -38,5 +38,5 @@ public Action sent_bot_bomb_postion_data(Handle timer,any client){
     bomb_postion_sent = EndPrepSDKCall();
     if ((bomb_postion_sent = EndPrepSDKCall()) == null) SetFailState("Not find CSGameState::UpdatePlantedBomb");
 
-    SDKCall(bomb_postion_sent,GetEntityAddress(client)+22484, server_c4_position);
+    SDKCall(bomb_postion_sent,GetEntityAddress(client)+22484, Server_C4_Position);
 }
